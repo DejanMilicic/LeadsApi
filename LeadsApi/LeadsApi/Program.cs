@@ -42,4 +42,13 @@ app.MapPost("/lead", async (Lead lead, IDocumentStore store) =>
 .WithName("CreateLead")
 .WithOpenApi();
 
+app.MapGet("/lead", async (string id, IDocumentStore store) =>
+    {
+        using var session = store.OpenSession();
+
+        return Results.Ok(session.Load<Lead>(id));
+    })
+    .WithName("GetLead")
+    .WithOpenApi();
+
 app.Run();
